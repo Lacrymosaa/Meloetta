@@ -3,7 +3,9 @@ Meloetta é um programa para baixar playlist do spotify. Ele não baixa diretame
 
 # Como usar:
 - Instale as bibliotecas necessárias juntamente com o spotify_dl
+````
     pip install spotify_dl
+````
 - Será necessário criar uma aplicação no Spotify for Developers (https://developer.spotify.com/)
 - Crie um app, vá em settings e pegue o Client ID e o Client Secret. PS: Na redirect URI coloque 'http://localhost:8888/callback' para evitar possiveis erros.
 - Mude o credentials.json colocando o ID e Secret lá.
