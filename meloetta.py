@@ -1,8 +1,6 @@
 import os
-import json
 import subprocess
 import datetime
-from mutagen.id3 import ID3, APIC
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QMessageBox
 from PyQt5.QtCore import QTimer, QThread, pyqtSignal
 from PyQt5.QtGui import QPalette, QColor, QFont, QIcon
@@ -19,78 +17,16 @@ class Download(QThread):
         self.download_playlist(self.playlist_url)
         self.download_finished.emit()
 
-    def download_playlist(self, playlist_url):
-        # Lê as credenciais do arquivo JSON
-        client_id, client_secret = self.load_credentials("credentials.json")
-        if client_id is None or client_secret is None:
-            return
-
-        # Configura as variáveis de ambiente com as credenciais do Spotify
-        os.environ["SPOTIPY_CLIENT_ID"] = client_id
-        os.environ["SPOTIPY_CLIENT_SECRET"] = client_secret
-        
-        # Verifica se o spotify-dl está instalado
-        if not self.is_spotify_dl_installed():
-            print("O spotify_dl não está instalado. Por favor, instale-o antes de prosseguir.")
-            return
-
+    def download_playlist(self, playlist_url):       
         # Cria uma pasta para salvar os arquivos de áudio
         output_folder = "Musics"
         os.makedirs(output_folder, exist_ok=True)
 
-        # Chama o spotify-dl para baixar a playlist
-        command = f"spotify_dl -l {playlist_url} -o {output_folder}"
+        # Utiliza o comando no cmd
+        command = f"spotdl download {playlist_url} --output {output_folder}"
         subprocess.call(command, shell=True)
 
-        # Adiciona a capa às músicas baixadas
-        self.add_cover_art(output_folder)
-
-    def load_credentials(self, file_path):
-        try:
-            with open(file_path, "r") as file:
-                data = json.load(file)
-                return data.get("client_id"), data.get("client_secret")
-        except FileNotFoundError:
-            print(f"O arquivo '{file_path}' não foi encontrado.")
-            return None, None
-        except json.JSONDecodeError:
-            print(f"O arquivo '{file_path}' não está no formato JSON válido.")
-            return None, None
-
-    def is_spotify_dl_installed(self):
-        # Verifica se o spotify-dl está instalado no sistema
-        try:
-            subprocess.check_output(["spotify_dl", "--help"])
-            return True
-        except OSError:
-            return False
-
-    def add_cover_art(self, folder_path):
-        cp_folder = "Musics"
-        os.makedirs(cp_folder, exist_ok=True)
-
-        # Itera sobre os arquivos de música na pasta
-        for file_name in os.listdir(folder_path):
-            file_path = os.path.join(folder_path, file_name)
-
-            # Verifica se o arquivo é um arquivo de música
-            if file_name.endswith(".mp3"):
-                # Abre o arquivo de música
-                audio = ID3(file_path)
-
-                # Adiciona a imagem da capa
-                with open(cp_folder, "rb") as cover_image_file:
-                    cover_art = cover_image_file.read()
-                    audio["APIC"] = APIC(
-                        encoding=3,
-                        mime="image/jpeg",
-                        type=3,
-                        desc="Cover",
-                        data=cover_art
-                    )
-
-                # Salva as alterações
-                audio.save()
+        print("Download Encerrado!")
 
 class Meloetta(QMainWindow):
     def __init__(self):
