@@ -1,17 +1,33 @@
 # Meloetta
-Meloetta é um programa para baixar playlists do spotify utilizando spotdl. O spotdl é uma biblioteca que busca as músicas e as baixa diretamente do Youtube Music, evitando o problema de depender do vídeo escolhido ter um bom áudio ou não ser um vídeo-clipe. 
 
-# Como usar:
-- Instale as bibliotecas necessárias juntamente com o spotdl
-````
-    pip install spotdl
-````
-- Execute a Meloetta, coloque o link da playlist e seja feliz!
+**Meloetta** is a Python program for downloading Spotify playlists using [spotDL](https://github.com/spotDL/spotify-downloader). Unlike some alternatives, spotDL fetches songs directly from **YouTube Music**, ensuring higher consistency in audio quality by avoiding music video sources or poorly ripped audio.
 
-# Pirouette Form
-Durante o Outono (20/03 à 21/06) a Meloetta terá as cores de sua Pirouette Form!
+## Features
+- Download entire playlists from Spotify with ease.
+- High-quality audio: downloads now default to **320kbps MP3** (as of June 21, 2025).
+- Simple and fast setup — no need for custom Spotify Developer apps.
 
-# Update
-- (05/07) Meloetta não usa mais spotify_dl, não tendo mais a necessidade de ffmpeg e a criação de aplicativos no Spotify For Developers. O uso do spotify_dl se tornou ruim para playlists longas devido a ele sempre iterar sobre todas as músicas já baixadas até conseguir achar a nova para converter em .mp3.
-Em testes a antiga versão levou 15 horas para baixar 655 músicas. Sua versão mais nova levou pouco menos de 55 minutos.
+## Installation
 
+1. Install [spotDL](https://pypi.org/project/spotdl/) via pip:
+
+   ```bash
+   pip install spotdl
+   ```
+
+2. Run Meloetta, paste your Spotify playlist link, and enjoy!
+
+## Seasonal Theme: Pirouette Form
+
+From **March 20th to June 21st**, Meloetta will display colors inspired by her *Pirouette Form* as a seasonal touch. 🍂
+
+## Changelog
+
+### 🆕 June 21, 2025
+- Meloetta now downloads songs in **320kbps** by default.
+
+### 🛠️ July 5, 2023
+- Migrated from `spotify_dl` to `spotDL`, removing the need for `ffmpeg` and Spotify Developer setup.
+- Major performance improvements for large playlists:
+  - Previous version: ~15 hours for 655 songs.
+  - Current version: ~55 minutes for the same playlist.
